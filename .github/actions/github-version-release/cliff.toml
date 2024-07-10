@@ -1,5 +1,6 @@
 # git-cliff ~ configuration file
 # https://git-cliff.org/docs/configuration
+
 [changelog]
 # template for the changelog body
 # https://keats.github.io/tera/docs/#introduction
@@ -7,12 +8,14 @@ body = """
 {%- macro remote_url() -%}
   https://github.com/{{ remote.github.owner }}/{{ remote.github.repo }}
 {%- endmacro -%}
+
 {% macro print_commit(commit) -%}
     - {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
         {% if commit.breaking %}[**breaking**] {% endif %}\
         {{ commit.message | upper_first }} - \
         ([{{ commit.id | truncate(length=7, end="") }}]({{ self::remote_url() }}/commit/{{ commit.id }}))\
 {% endmacro -%}
+
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | striptags | trim | upper_first }}
     {% for commit in commits
@@ -35,6 +38,7 @@ footer = """"""
 # postprocessors
 #postprocessors = [
 #  { pattern = '<REPO>', replace = "https://github.com/INFO NEEDED" },]
+
 [git]
 # parse the commits based on https://www.conventionalcommits.org
 conventional_commits = true
@@ -59,6 +63,7 @@ ignore_tags = "rc"
 topo_order = false
 # sort the commits inside sections by oldest/newest order
 sort_commits = "newest"
+
 commit_parsers = [
   { message = "^feat", group = "<!-- 0 -->⛰️  Features" },
   { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
