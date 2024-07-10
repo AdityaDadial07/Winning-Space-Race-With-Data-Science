@@ -43,7 +43,7 @@ runs:
         # Generate changelog
         git cliff \
           -c .github/actions/github-bump-release/cliff.toml \
-          --latest  \
+          --unreleased  \
           --output CHANGELOG.md \
           -vv
         changelog=$(cat CHANGELOG.md)
